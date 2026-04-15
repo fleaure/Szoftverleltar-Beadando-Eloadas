@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szoftverleltár - Web programozás-1</title>
+    <style>
+        
+        :root {
+            --dark-blue: #0a192f;
+            --medium-blue: #112240;
+            --accent-blue: #233554;
+            --text-color: #ccd6f6;
+            --highlight-color: #64ffda;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--dark-blue);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--medium-blue);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-blue);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            color: var(--text-color);
+        }
+
+        nav {
+            background-color: var(--accent-blue);
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--highlight-color);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: var(--medium-blue);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+        }
+
+        h2 {
+            color: var(--highlight-color);
+            border-bottom: 1px solid var(--accent-blue);
+            padding-bottom: 10px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .menu-description {
+            background-color: var(--dark-blue);
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid var(--accent-blue);
+        }
+
+        .menu-description h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: var(--highlight-color);
+        }
+
+        footer {
+            background-color: var(--medium-blue);
+            text-align: center;
+            padding: 25px;
+            margin-top: auto;
+            border-top: 2px solid var(--accent-blue);
+        }
+
+        .neptun-info {
+            font-weight: bold;
+            color: var(--highlight-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Web programozás-1 Előadás Házi feladat</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Főoldal</a>
+        <a href="javascript.html">JavaScript</a>
+        <a href="react.html">React</a>
+        <a href="spa.html">SPA</a>
+        <a href="fetchapi.html">Fetch API</a>
+        <a href="axios.html">Axios</a>
+        <a href="oojs.html">OOJS</a>
+    </nav>
+
+    <main>
+        <section>
+            <h2>Szoftverleltár Alkalmazás</h2>
+            <p>Ez az alkalmazás egy oktatási célú szoftverleltár nyilvántartó rendszer, amely bemutatja a modern webes technológiák alkalmazását a kliens és szerver oldalon egyaránt.</p>
+            
+            <div class="grid-container">
+                <div class="menu-description">
+                    <h3>Kezelőfelületek</h3>
+                    <p>Az alkalmazás különböző technológiai megközelítésekkel (JavaScript, React) valósít meg CRUD műveleteket a szoftverek, gépek és telepítések adatain.</p>
+                </div>
+                <div class="menu-description">
+                    <h3>Adatkezelés</h3>
+                    <p>A rendszer támogatja a tömb alapú helyi tárolást, valamint a Fetch API és Axios segítségével végzett szerver oldali adatbázis-műveleteket is.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Készítette: 
+            <span class="neptun-info">Matiszné Tóth Brigitta ([H0E8QF])</span> és 
+            <span class="neptun-info">Kovács Dániel ([Z2IGLN])</span>
+        </p>
+    </footer>
+
+</body>
+</html>
