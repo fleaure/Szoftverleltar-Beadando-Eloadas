@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript CRUD - Szoftverleltár</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Web programozás-1 Előadás Házi feladat</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Főoldal</a>
+        <a href="javascript.html" class="active">JavaScript</a>
+        <a href="react.html">React</a>
+        <a href="spa.html">SPA</a>
+        <a href="fetchapi.html">Fetch API</a>
+        <a href="axios.html">Axios</a>
+        <a href="oojs.html">OOJS</a>
+    </nav>
+
+    <main>
+        <h2>Szoftver Adatbázis (Kliensoldali CRUD)</h2>
+        
+        <div>
+            <form onsubmit="event.preventDefault(); onFormSubmit();" autocomplete="off" class="crud-form">
+                <div class="form-group">
+                    <label>Szoftver ID*</label>
+                    <input type="number" name="szoftverId" id="szoftverId" placeholder="Pl: 106">
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        Szoftver neve* <span class="validation-error hide" id="nevValidationError">(Kötelező!)</span>
+                    </label>
+                    <input type="text" name="szoftverNev" id="szoftverNev" placeholder="Pl: Photoshop">
+                </div>
+                
+                <div class="form-group">
+                    <label>Kategória</label>
+                    <input type="text" name="kategoria" id="kategoria" placeholder="Pl: képszerkesztés">
+                </div>
+
+                <div class="form-action">
+                    <input type="submit" value="Mentés">
+                </div>
+            </form>
+        </div>
+
+        <div>
+            <table class="list" id="szoftverList">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Név</th>
+                        <th>Kategória</th>
+                        <th>Műveletek</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <p>Készítette: 
+            <span class="neptun-info">Matiszné Tóth Brigitta ([H0E8QF])</span> és 
+            <span class="neptun-info">Kovács Dániel ([Z2IGLN])</span>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
