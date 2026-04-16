@@ -122,9 +122,9 @@ h2 {
     flex-direction: column;
 }
 
-.form-action {
+/*.form-action { }
     /* Nem kap flex: 1-et, így csak akkora lesz, amekkora a gomb */
-}
+
 
 label {
     font-size: 0.9rem;
@@ -211,4 +211,8 @@ table.list td button {
     font-size: 0.85rem;
     margin-right: 5px;
     height: auto;
+}
+#root {
+    display: block !important;
+    min-height: 100px;
 }
