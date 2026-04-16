@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web programozás-1 - Fetch API CRUD</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header style="padding: 40px 20px !important; text-align: center !important; display: block !important; background-color: var(--medium-blue) !important;">
+        <h1 style="font-size: 2.2rem !important; margin: 0 !important; color: var(--text-color) !important; font-weight: bold !important;">
+            Web programozás-1 Előadás Házi feladat
+        </h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Főoldal</a>
+        <a href="javascript.html">JavaScript</a>
+        <a href="react.html">React</a>
+        <a href="spa.html">SPA</a>
+        <a href="fetchapi.html" class="active">Fetch API</a>
+        <a href="axios.html">Axios</a>
+        <a href="oojs.html">OOJS</a>
+    </nav>
+
+    <main class="container mt-4 text-white pb-5">
+        <h2 class="mb-4">Szoftvertelepítések kezelése (Fetch API CRUD)</h2>
+        
+        <div class="card bg-dark text-white p-4 mb-4 border-secondary shadow">
+            <h4 id="formTitle">Új telepítés rögzítése</h4>
+            <form id="fetchForm" class="row g-3">
+                <input type="hidden" id="telepitesId">
+                <div class="col-md-3">
+                    <label class="form-label">Gép ID</label>
+                    <input type="number" id="gepid" class="form-control bg-dark text-white border-secondary" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Szoftver ID</label>
+                    <input type="number" id="szoftverid" class="form-control bg-dark text-white border-secondary" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Verzió</label>
+                    <input type="text" id="verzio" class="form-control bg-dark text-white border-secondary" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Dátum</label>
+                    <input type="date" id="datum" class="form-control bg-dark text-white border-secondary" required>
+                </div>
+                <div class="col-12 mt-3">
+                    <button type="submit" id="saveBtn" class="btn btn-primary me-2">Hozzáadás</button>
+                    <button type="button" id="cancelBtn" class="btn btn-outline-light d-none" onclick="resetForm()">Mégse</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-responsive bg-dark p-3 rounded shadow border border-secondary">
+            <table class="table table-dark table-hover table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Gép ID</th>
+                        <th>Szoftver ID</th>
+                        <th>Verzió</th>
+                        <th>Dátum</th>
+                        <th class="text-center">Műveletek</th>
+                    </tr>
+                </thead>
+                <tbody id="telepitesTable">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <button class="btn btn-outline-info" onclick="changePage(-1)">« Előző 50</button>
+            <span id="pageInfo" class="fw-bold text-info">1. oldal</span>
+            <button class="btn btn-outline-info" onclick="changePage(1)">Következő 50 »</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>Készítette: 
+            <span class="neptun-info">Matiszné Tóth Brigitta ([H0E8QF])</span> és 
+            <span class="neptun-info">Kovács Dániel ([Z2IGLN])</span>
+        </p>
+    </footer>
+
+    <script src="./fetch_script.js"></script>
+</body>
+</html>
