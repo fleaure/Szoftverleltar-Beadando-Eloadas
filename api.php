@@ -1,57 +1,73 @@
 <?php
-header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+// Az OPTIONS kérések kezelése a CORS miatt
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    exit;
+}
+
 require "db.php"; 
 
 $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case 'GET':
-
-        if (isset($_GET['t']) && $_GET['t'] === 'gep') {
-            try {
+        try {
+            // 1. OOJS-nek: Gépek listája (t=gep)
+            if (isset($_GET['t']) && $_GET['t'] === 'gep') {
                 $stmt = $pdo->query("SELECT * FROM gep ORDER BY hely ASC");
                 echo json_encode([
-                    "status" => "Gépek listája betöltve!", 
+                    "status" => "success", 
                     "readData" => $stmt->fetchAll()
                 ]);
-            } catch(Exception $e) {
-                echo json_encode(["status" => "Hiba: " . $e->getMessage()]);
+            } 
+            // 2. OOJS-nek: Szoftverek listája (table=szoftver)
+            else if (isset($_GET['table']) && $_GET['table'] === 'szoftver') {
+                $stmt = $pdo->query("SELECT * FROM szoftver ORDER BY nev ASC");
+                echo json_encode([
+                    "status" => "success",
+                    "readData" => $stmt->fetchAll()
+                ]);
             }
-        } 
-
-
-        else if (isset($_GET['task']) && $_GET['task'] === 'gepek') {
-            try {
+            // 3. React-nek/Választóknak: Csak id és hely (task=gepek)
+            else if (isset($_GET['task']) && $_GET['task'] === 'gepek') {
                 $stmt = $pdo->query("SELECT id, hely FROM gep ORDER BY hely ASC");
                 echo json_encode(["gepek" => $stmt->fetchAll()]);
-            } catch(Exception $e) {
-                echo json_encode(["status" => "Hiba: " . $e->getMessage()]);
-            }
-        } 
+            } 
+            // 4. Fetch API CRUD-nak: Telepítések listája (lapozással vagy anélkül)
+            else {
+                $table = isset($_GET['table']) ? $_GET['table'] : 'telepites';
+                
+                // Biztonsági szűrő, hogy csak létező táblához nyúljanak
+                $allowedTables = ['telepites', 'gep', 'szoftver'];
+                if (!in_array($table, $allowedTables)) {
+                    throw new Exception("Nem engedélyezett tábla.");
+                }
 
-
-        else {
-            try {
                 $offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
-                $limit = 50; 
+                $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 50; 
 
-                $stmt = $pdo->prepare("SELECT * FROM telepites ORDER BY id DESC LIMIT :limit OFFSET :offset");
+                $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY id DESC LIMIT :limit OFFSET :offset");
                 $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
                 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
                 $stmt->execute();
 
                 echo json_encode([
-                    "status" => "Telepítési adatok lekérve!", 
+                    "status" => "success", 
                     "readData" => $stmt->fetchAll()
                 ]);
-            } catch(Exception $e) {
-                echo json_encode(["status" => "Hiba: " . $e->getMessage()]);
             }
+        } catch(Exception $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
         }
         break;
 
     case 'POST':
-        // Új telepítés rögzítése (CRUD - Create)
+        // Új telepítés rögzítése
         try {
             $data = json_decode(file_get_contents("php://input"), true);
             $stmt = $pdo->prepare("INSERT INTO telepites (gepid, szoftverid, verzio, datum) VALUES (?, ?, ?, ?)");
@@ -63,12 +79,13 @@ switch ($method) {
             ]);
             echo json_encode(["status" => "Telepítés sikeresen rögzítve!"]);
         } catch(Exception $e) {
+            http_response_code(400);
             echo json_encode(["status" => "Hiba: " . $e->getMessage()]);
         }
         break;
 
     case 'PUT':
-        // Meglévő telepítés módosítása (CRUD - Update)
+        // Telepítés módosítása
         try {
             $data = json_decode(file_get_contents("php://input"), true);
             $stmt = $pdo->prepare("UPDATE telepites SET gepid=?, szoftverid=?, verzio=?, datum=? WHERE id=?");
@@ -81,18 +98,20 @@ switch ($method) {
             ]);
             echo json_encode(["status" => "Telepítés sikeresen módosítva!"]);
         } catch(Exception $e) {
+            http_response_code(400);
             echo json_encode(["status" => "Hiba: " . $e->getMessage()]);
         }
         break;
 
     case 'DELETE':
-
+        // Telepítés törlése
         try {
             $data = json_decode(file_get_contents("php://input"), true);
             $stmt = $pdo->prepare("DELETE FROM telepites WHERE id=?");
             $stmt->execute([$data['id']]);
             echo json_encode(["status" => "Telepítés törölve!"]);
         } catch(Exception $e) {
+            http_response_code(400);
             echo json_encode(["status" => "Hiba: " . $e->getMessage()]);
         }
         break;
