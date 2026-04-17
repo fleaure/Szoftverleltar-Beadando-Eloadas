@@ -41,3 +41,19 @@ Az alkalmazás egy egységes, sötétkék-cián (Navy & Teal) dizájnra épül, 
 ## ⚙️ Telepítés és Futtatás (Lokális fejlesztés)
 
 A projekt teljes futtatásához szerverkörnyezet (pl. XAMPP) és Node.js szükséges.
+2. React alkalmazások (Axios és SPA) buildelése:
+Mivel a React modulok Babel/standalone nélkül készültek, a futtatáshoz le kell őket fordítani:
+
+    Nyiss egy terminált a react-axios (vagy az SPA) mappában.
+
+    Telepítsd a függőségeket:
+    Bash
+
+    npm install
+
+    Fordítsd le a projektet:
+    Bash
+
+    npm run build
+
+    A generált build mappa tartalmát töltsd fel a webszerverre az adott HTML fájl mellé.
